@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>OpenJSCAD.org</title>
+<link rel="shortcut icon" href="OpenJSCAD.org/imgs/favicon.png" type="image/x-png">
+<link rel="stylesheet" href="OpenJSCAD.org/jquery/themes/base/jquery-ui.css" />
+<script src="OpenJSCAD.org/jquery/jquery-1.9.1.js"></script>
+<script src="OpenJSCAD.org/jquery/jquery-ui.js"></script>
+<script src="OpenJSCAD.org/jquery/jquery.hammer.js"></script>
+<link rel="stylesheet" href="OpenJSCAD.org/style.css" type="text/css">
+<link rel="stylesheet" href="OpenJSCAD.org/openjscad.css" type="text/css">
+</head>
+<body onload="onload()">
+<style>
+/* we choose chrome theme for ace, and make sure line number is transparent too */
+/* this has to stay in the body (not head) otherwise does not take effect */
+.ace-chrome .ace_gutter {
+   border-left: 2px dashed rgba(200,200,200,0.2);
+   background: none;
+}
+.ace-chrome {
+   font-size: 10pt;     // -- not 'px', but 'pt' for high dpi screens
+}
+</style>
+<script src="OpenJSCAD.org/lightgl.js"></script>
+<script src="csg.js"></script>
+<script src="openjscad.js"></script>
+<script src="openscad.js"></script>
+<script src="OpenJSCAD.org/underscore.js"></script>
+<script src="OpenJSCAD.org/openscad-openjscad-translator.js"></script>
+<script lang=JavaScript>
+</script>
+<div id="header">
+<img src="OpenJSCAD.org/imgs/title.png">
+<div id="errordiv"></div>
+</div>
+
+<div id="editor">// -- OpenJSCAD.org logo
+
+function main() {
+   return union(
+      difference(
+         cube({size: 3, center: true}),
+         sphere({r:2, center: true})
+      ),
+      intersection(
+          sphere({r: 1.3, center: true}),
+          cube({size: 2.1, center: true})
+      )
+   ).translate([0,0,1.5]).scale(10);
+}
+</div>
+
+<div oncontextmenu="return false;" id="viewer"></div> <!-- avoiding popup when right mouse is clicked -->
+
+<div id="parametersdiv"></div>
+<div id="tail">
+  <div id="statusdiv"></div>
+</div>
+<div id=footer>
+OpenJSCAD.org, MIT License &amp; GPLv2, get your own copy/clone/fork from <a target=_blank href="OpenJSCAD.org/https://github.com/Spiritdude/OpenJSCAD.org">GitHub: OpenJSCAD</a>
+</div>
+<script src="OpenJSCAD.org/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script id=conversionWorker type="javascript/worker"></script>
+
+<script src="js/custom-openjscad-shapes.js"></script>
+<script src="js/openjscad-index.js"></script>
+</body></html>
