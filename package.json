@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/michalbe/SEOJC.oPP",
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "grunt-browser-sync": "^2.0.0"
   }
 }
