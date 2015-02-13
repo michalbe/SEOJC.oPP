@@ -1,0 +1,19 @@
+{
+  "name": "SEOJC.oPP",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michalbe/SEOJC.oPP.git"
+  },
+  "author": "Michal Budzynski <michal@virtualdesign.pl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michalbe/SEOJC.oPP/issues"
+  },
+  "homepage": "https://github.com/michalbe/SEOJC.oPP",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browser-sync": "^2.0.0"
+  }
+}

@@ -26,3 +26,12 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+.DS_Store
+*.swp
+
+# OpenJSCAD.org files
+OpenJSCAD.org
+csg.js
+openjscad.js
+openscad.js
+imgs/busy.gif
