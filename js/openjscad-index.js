@@ -4,6 +4,7 @@ var me = 'web-online';
 var gMemFs = [];
 var gProcessor = null;
 var editor = null;
+var customShapes = null;
 
 var browser = 'unknown';
 if (navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/i)) {
@@ -73,6 +74,9 @@ window.onload = function() {
       $('#statusspan').html('Ready in ' + newTime + 's');
     };
 
+    if (customShapes) {
+      src = customShapes + src;
+    }
     gProcessor.setJsCad(src);
   };
 
@@ -91,14 +95,40 @@ window.onload = function() {
   gProcessor = new OpenJsCad.Processor($('#viewer')[0]);
 
   if (document.location.search) {
-    var modelUrl = document.location.search.split('=').pop();
-    $.ajax({
-      url: modelUrl
-    }).done(function(data) {
-      editor.setValue(data, 1);
-      exec(editor);
-      editor.blur();
-    });
+    var urls = document.location.search.split('&');
+    var modelUrl = urls.filter(function(url){
+      return url.indexOf('model') > -1;
+    })[0].split('=').pop();
+
+    var csUrl = urls.filter(function(url){
+      return url.indexOf('custom-shape') > -1;
+    })[0].split('=').pop();
+
+    console.log(modelUrl, 'm');
+    console.log(csUrl, 'c');
+    if (csUrl) {
+      $.ajax({
+        url: csUrl
+      }).done(function(data) {
+        customShapes = data;
+        $.ajax({
+          url: modelUrl
+        }).done(function(data) {
+          editor.setValue(data, 1);
+          exec(editor);
+          editor.blur();
+        });
+      });
+    } else {
+      $.ajax({
+        url: modelUrl
+      }).done(function(data) {
+        editor.setValue(data, 1);
+        exec(editor);
+        editor.blur();
+      });
+    }
+
     var cameraSettings = window.sessionStorage.getItem('camera');
     if (cameraSettings) {
       cameraSettings = JSON.parse(cameraSettings);
