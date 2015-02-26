@@ -95,22 +95,34 @@ window.onload = function() {
   gProcessor = new OpenJsCad.Processor($('#viewer')[0]);
 
   if (document.location.search) {
-    var urls = document.location.search.split('&');
-    var modelUrl = urls.filter(function(url){
-      return url.indexOf('model') > -1;
-    })[0].split('=').pop();
+    var urls = document.location.search;
 
-    var csUrl = urls.filter(function(url){
-      return url.indexOf('custom-shape') > -1;
-    })[0].split('=').pop();
+    if (urls.indexOf('&') > -1) {
+      urls = urls.split('&');
+      var modelUrl = urls.filter(function(url){
+        return url.indexOf('model') > -1;
+      })[0].split('=').pop();
 
-    console.log(modelUrl, 'm');
-    console.log(csUrl, 'c');
-    if (csUrl) {
-      $.ajax({
-        url: csUrl
-      }).done(function(data) {
-        customShapes = data;
+      var csUrl = urls.filter(function(url){
+        return url.indexOf('custom-shape') > -1;
+      })[0].split('=').pop();
+
+      console.log(modelUrl, 'm');
+      console.log(csUrl, 'c');
+      if (csUrl) {
+        $.ajax({
+          url: csUrl
+        }).done(function(data) {
+          customShapes = data;
+          $.ajax({
+            url: modelUrl
+          }).done(function(data) {
+            editor.setValue(data, 1);
+            exec(editor);
+            editor.blur();
+          });
+        });
+      } else {
         $.ajax({
           url: modelUrl
         }).done(function(data) {
@@ -118,16 +130,17 @@ window.onload = function() {
           exec(editor);
           editor.blur();
         });
-      });
+      }
     } else {
       $.ajax({
-        url: modelUrl
+        url: document.location.search.split('=').pop()
       }).done(function(data) {
         editor.setValue(data, 1);
         exec(editor);
         editor.blur();
       });
     }
+
 
     var cameraSettings = window.sessionStorage.getItem('camera');
     if (cameraSettings) {
