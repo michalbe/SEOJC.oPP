@@ -35,11 +35,11 @@ var insertRequiredModel = function(model, source) {
   var loadedModel = requireModel(model.match(/require\(['"+](.*)['"+]\)/)[1]);
   source = source.toString().split('\n');
 
-  var lineIndex = source.indexOf(model)
+  var lineIndex = source.indexOf(model);
   source[lineIndex] = source[lineIndex].match(/(.*)=/)[0] + loadedModel;
 
   return source.join('\n');
-}
+};
 
 window.onload = function() {
   $('#viewer').height($(window).height());
@@ -71,7 +71,7 @@ window.onload = function() {
     gProcessor.onchange = function() {
       var newTime = ((new Date()) - time) / 1000;
       $('#statusspan').html('Ready in ' + newTime + 's');
-    }
+    };
 
     gProcessor.setJsCad(src);
   };
